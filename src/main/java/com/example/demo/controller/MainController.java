@@ -1,6 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Furniture;
+import com.example.demo.repo.FurnitureRepo;
+import com.example.demo.service.FurnitureService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,14 +15,17 @@ import java.util.stream.Collectors;
 public class MainController {
 
     List<Furniture> items = new ArrayList<>();
+    @Autowired
+    FurnitureService furnitureService;
 
     @GetMapping
     @ResponseBody
     public List<Furniture> getItems(@RequestParam(name = "search", required = false) String itemName) {
-        if(itemName == null) return items;
-        return items.stream()
-                .filter(item -> item.getName().contains(itemName))
-                .collect(Collectors.toList());
+//        if(itemName == null) return items;
+//        return items.stream()
+//                .filter(item -> item.getName().contains(itemName))
+//                .collect(Collectors.toList());
+        return furnitureService.getAll();
     }
 
     @PostMapping
